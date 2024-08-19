@@ -161,7 +161,8 @@ int main(void)
 
             // resume DMA transmission
             // HAL_UART_DMAResume(&huart1);
-            //cdc_Transmit("hello world\r\n");
+            // cdc_Transmit("hello world\r\n");
+            // faipfajpa jpapf
             sprintf(buffer, "%lu", (unsigned long)lastTransmitTime);
             cdc_Transmit(buffer);
 
