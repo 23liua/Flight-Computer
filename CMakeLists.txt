@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.22)
 #
 
 # Setup compiler settings
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
@@ -27,15 +27,17 @@ include("cmake/gcc-arm-none-eabi.cmake")
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-# Enable CMake support for ASM and C languages
-enable_language(C ASM)
-
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
+# Enable CMake support for ASM and C languages
+enable_language(C ASM)
+
+
 file(GLOB_RECURSE SOURCES
     "${CMAKE_SOURCE_DIR}/Core/Src/*.c"
+    "${CMAKE_SOURCE_DIR}/Core/Inc/*.h"
     #"${CMAKE_SOURCE_DIR}/Drivers/STM32F4xx_HAL_Driver/Src/*.c"
     #"${CMAKE_SOURCE_DIR}/FATFS/**/*.c"
     #"${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FatFs/src/*.c"
@@ -54,6 +56,11 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
 )
 
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+    #-u _printf_float
+    
+)
+
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
@@ -62,6 +69,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    "${CMAKE_SOURCE_DIR}/Core/Inc"
     "${CMAKE_SOURCE_DIR}/Core/Src"
 )
 
@@ -73,6 +81,6 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
-
+    c
     # Add user defined libraries
 )
