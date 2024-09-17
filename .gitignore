@@ -1,0 +1,36 @@
+# Build folders
+/build/
+/Debug/
+
+# CMake generated files
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/CMakeLists.txt.user
+
+# IDE-specific files
+/.vscode/
+/.metadata/
+/.settings/
+/STM32CubeIDE/
+
+# Backup files
+.project.bak
+.cproject.bak
+.mxproject.bak
+*.bak
+
+# Compiled object files
+*.o
+*.d
+*.map
+*.elf
+*.bin
+
+# Log and temporary files
+*.log
+*.tmp
+*.swp
+
+# Exclude auto-generated files
+/flightcomputer.ioc.bak
