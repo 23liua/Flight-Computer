@@ -1,6 +1,0 @@
-../Core/Src/sdCard.c:15:5:buffer_Size	24	static
-../Core/Src/sdCard.c:21:6:buffer_Clear	24	static
-../Core/Src/sdCard.c:26:6:cdc_Transmit	16	static
-../Core/Src/sdCard.c:30:6:sd_Start_Up	8	static
-../Core/Src/sdCard.c:54:6:sd_write	16	static
-../Core/Src/sdCard.c:70:6:sd_read	16	static

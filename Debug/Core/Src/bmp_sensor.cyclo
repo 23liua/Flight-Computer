@@ -1,3 +1,0 @@
-../Core/Src/bmp_sensor.c:10:6:Bmp_Init	2
-../Core/Src/bmp_sensor.c:21:6:Bmp_Read_Data	2
-../Core/Src/bmp_sensor.c:34:7:altitude_calc	1

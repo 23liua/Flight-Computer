@@ -1,3 +1,0 @@
-../Core/Src/gps.c:14:6:HAL_UART_RxCpltCallback	16	static
-../Core/Src/gps.c:18:6:Gps_Data_Parse	64	static
-../Core/Src/gps.c:50:6:Gps_Data_Conversion	56	static
