@@ -12,7 +12,6 @@
 /.vscode/
 /.metadata/
 /.settings/
-/STM32CubeIDE/
 
 # Backup files
 .project.bak
