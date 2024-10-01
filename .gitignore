@@ -3,13 +3,10 @@
 /Debug/
 
 # CMake generated files
-/CMakeFiles/
 /CMakeCache.txt
-/cmake_install.cmake
 /CMakeLists.txt.user
 
 # IDE-specific files
-/.vscode/
 /.metadata/
 /.settings/
 
