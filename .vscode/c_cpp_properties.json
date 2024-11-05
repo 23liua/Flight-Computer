@@ -4,14 +4,7 @@
         {
             "name": "STM32",
             "includePath": [
-                "${workspaceFolder}/Core",
-                "${workspaceFolder}/Drivers",
-                "${workspaceFolder}/FATFS",
-                "${workspaceFolder}/Middlewares",
-                "${workspaceFolder}/USB_DEVICE",
-                "${workspaceFolder}/Core/Inc",
-                "${workspaceFolder}/FATFS/App",
-                "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc"
+                "${workspaceFolder}/**"
             ],
             "configurationProvider": "ms-vscode.cmake-tools",
             "intelliSenseMode": "${default}"

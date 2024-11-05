@@ -32,6 +32,8 @@ void Gps_Data_Parse(UART_HandleTypeDef *huart, uint32_t lastTransmitTime)
             sscanf((char *)NEO_GPS.GPGGA, "GPGGA,%lf,%lf,%c,%lf,%c,,,,%lf,,%lf,,,", &NEO_GPS.time,
                    &NEO_GPS.latitude, &NEO_GPS.N_OR_S, &NEO_GPS.longitude, &NEO_GPS.E_OR_W, &NEO_GPS.altitude_approx,
                    &NEO_GPS.altitude_correction);
+            // HAL_UART_Transmit_DMA(huart, NEO_GPS.GPGGA, 50);
+
             Gps_Data_Conversion();
             sprintf(NEO_GPS.result, "Time: %.5lf Latitude: %.5lf Longitude: %.5lf\r\n",
                     NEO_GPS.time, NEO_GPS.latitude, NEO_GPS.longitude);
@@ -42,7 +44,7 @@ void Gps_Data_Parse(UART_HandleTypeDef *huart, uint32_t lastTransmitTime)
             free(NEO_GPS.GPGGA);
 
             // transmit radio data
-            // HAL_UART_Transmit_DMA(huart, NEO_GPS.result, 100);
+            HAL_UART_Transmit_DMA(huart, NEO_GPS.result, 100);
         }
         /*size_t offset = start - (char*) data;
         return data + offset;*/
