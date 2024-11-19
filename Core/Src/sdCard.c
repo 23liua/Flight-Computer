@@ -61,24 +61,29 @@ void sd_Start_Up()
         cdc_Transmit(buffer);
         buffer_Clear(buffer);
     }
+    // need to add confimration of SD card mounting that can be transmitted to Ground station
+
+    file_naming();
+}
+
+// file naming for now just forcibly overwrites the file
+void file_naming()
+{
+    fresult = f_open(&fil, "flight_log.txt", FA_CREATE_ALWAYS | FA_WRITE);
+    const char *title = "time, latitude, longitude, pressure, temperature, altitude\n";
+    fresult = f_puts(title, &fil);
+    fresult = f_close(&fil);
+    // cdc_Transmit("flight_log1.txt created and headers written\r\n");
 }
 
 void sd_write(char *input)
 {
-    // temp fix, saving flight temp to different file
-    fresult = FR_OK;
-    if (input[0] == 'T')
-    {
-        fresult = f_open(&fil, "flight_log_time.txt", FA_OPEN_ALWAYS | FA_WRITE | FA_OPEN_APPEND);
-    }
-    else
-    {
-        fresult = f_open(&fil, "flight_log_gps.txt", FA_OPEN_ALWAYS | FA_WRITE | FA_OPEN_APPEND);
-    }
+    fresult = f_open(&fil, "flight_log.txt", FA_OPEN_ALWAYS | FA_WRITE | FA_OPEN_APPEND);
+    // f_lseek(&fil, f_size(&fil));
     fresult = f_puts(input, &fil);
-    // cdc_Transmit("flight_log1.txt created and data written\r\n");
     fresult = f_close(&fil);
-    // sd_read(input);
+    // cdc_Transmit("written\r\n");
+    //  sd_read(input);
 }
 
 // reads back what's being written onto terminal

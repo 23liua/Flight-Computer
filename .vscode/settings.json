@@ -5,6 +5,10 @@
 	"files.associations": {
 		"bmp_sensor.h": "c",
 		"sdcard.h": "c",
-		"gps.h": "c"
+		"gps.h": "c",
+		"diskio.h": "c",
+		"bmp280.h": "c",
+		"fatfs_sd.h": "c",
+		"usbd_cdc.h": "c"
 	}
 }

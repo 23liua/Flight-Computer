@@ -33,9 +33,13 @@ void Bmp_Read_Data(BMP280_HandleTypedef *bmp280, float *pressure, float *tempera
         float altitude = 0;
         altitude = altitude_calc(pressure, temperature);
         sprintf((char *)sensor_Data, "Pressure: %.2f Pa, Temperature: %.2f C, Altitude: %.f ft\r\n", *pressure, *temperature, altitude);
+
+        // format for SD card
+        uint8_t sd_data[256];
+        sprintf((char *)sd_data, "%.2f, %.2f, %.f\r\n", *pressure, *temperature, altitude);
+        sd_write(sd_data);
     }
     cdc_Transmit(sensor_Data);
-    sd_write(sensor_Data);
 }
 
 float altitude_calc(float *pressure, float *temperature)

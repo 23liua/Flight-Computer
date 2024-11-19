@@ -1,13 +1,15 @@
 {
-    "version": 4,
-    "configurations": [
-        {
-            "name": "STM32",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "configurationProvider": "ms-vscode.cmake-tools",
-            "intelliSenseMode": "${default}"
-        }
-    ]
+	"version": 4,
+	"configurations": [
+		{
+			"name": "STM32",
+			"includePath": [
+				"${workspaceFolder}/**",
+				"${workspaceFolder}/Core/Inc/Drivers",
+				"${workspaceFolder}/Core/Src/Drivers"
+			],
+			"configurationProvider": "ms-vscode.cmake-tools",
+			"intelliSenseMode": "${default}"
+		}
+	]
 }

@@ -144,29 +144,23 @@ int main(void)
     while (1)
     {
         /* USER CODE END WHILE */
-
         /* USER CODE BEGIN 3 */
         if (HAL_GetTick() - lastTransmitTime >= 1000)
         {
-
-            // SD card reader & Bmp280 init
             if (lastTransmitTime == 0)
             {
+                // SD card reader & Bmp280 init
                 sd_Start_Up();
                 Bmp_Init(&hi2c1, &bmp280);
             }
-
-            Bmp_Read_Data(&bmp280, &temperature, &pressure, &humidity);
             Gps_Data_Parse(&huart1, lastTransmitTime);
+            Bmp_Read_Data(&bmp280, &temperature, &pressure, &humidity);
 
             HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin); // toggle LED
-                                                        // sd_write("paeffoaajojfafojf");
             // cdc_Transmit(NEO_GPS.data);
+
             // resume DMA transmission
             HAL_UART_DMAResume(&huart1);
-            // cdc_Transmit("hello world\r\n");
-            // sprintf(buffer, "%lu", (unsigned long)lastTransmitTime);
-            // cdc_Transmit(buffer);
 
             // get time
             lastTransmitTime = HAL_GetTick();

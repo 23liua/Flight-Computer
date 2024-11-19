@@ -18,38 +18,56 @@ uint8_t radioData[700];
 */
 void Gps_Data_Parse(UART_HandleTypeDef *huart, uint32_t lastTransmitTime)
 {
-    // CDC_Transmit_FS(NEO_GPS.data, strlen(NEO_GPS.data));
+    uint8_t GPGGA_Buffer[256];
+
     char *start = strstr((char *)NEO_GPS.data, "GPGGA");
     if (start != NULL)
     {
         char *newline_position = strchr(start, '\n');
         if (newline_position != NULL)
         {
-            size_t length = newline_position - start + 1; // calculate GPGAA substring length
-            NEO_GPS.GPGGA = (uint8_t *)malloc(length * sizeof(uint8_t));
-            strncpy((char *)NEO_GPS.GPGGA, start, length);
+            size_t length = newline_position - start + 1;
 
-            sscanf((char *)NEO_GPS.GPGGA, "GPGGA,%lf,%lf,%c,%lf,%c,,,,%lf,,%lf,,,", &NEO_GPS.time,
-                   &NEO_GPS.latitude, &NEO_GPS.N_OR_S, &NEO_GPS.longitude, &NEO_GPS.E_OR_W, &NEO_GPS.altitude_approx,
-                   &NEO_GPS.altitude_correction);
-            // HAL_UART_Transmit_DMA(huart, NEO_GPS.GPGGA, 50);
+            strncpy((char *)GPGGA_Buffer, start, length - 1);
+            GPGGA_Buffer[length - 1] = '\0';
 
+            sscanf((char *)GPGGA_Buffer, "GPGGA,%lf,%lf,%c,%lf,%c,,,,%lf,,%lf,,,",
+                   &NEO_GPS.time, &NEO_GPS.latitude, &NEO_GPS.N_OR_S,
+                   &NEO_GPS.longitude, &NEO_GPS.E_OR_W,
+                   &NEO_GPS.altitude_approx, &NEO_GPS.altitude_correction);
             Gps_Data_Conversion();
-            sprintf(NEO_GPS.result, "Time: %.5lf Latitude: %.5lf Longitude: %.5lf\r\n",
-                    NEO_GPS.time, NEO_GPS.latitude, NEO_GPS.longitude);
-            // CDC_Transmit_FS(NEO_GPS.GPGGA, length);
-            CDC_Transmit_FS(NEO_GPS.result, strlen(NEO_GPS.result)); // transmit Latitude and Longitude
-            // write result to SD card
-            sd_write(NEO_GPS.result);
-            free(NEO_GPS.GPGGA);
 
-            // transmit radio data
-            HAL_UART_Transmit_DMA(huart, NEO_GPS.result, 100);
+            // need to add check on whether or not the values are outrageously wrong
+            if (isnan(NEO_GPS.time) || isnan(NEO_GPS.latitude) || isnan(NEO_GPS.longitude))
+            {
+                NEO_GPS.time = 0.0;
+                NEO_GPS.latitude = 0.0;
+                NEO_GPS.longitude = 0.0;
+            }
+
+            // Format data for SD card logging
+            uint8_t sd_data[256];
+            sprintf((char *)sd_data, "%.lf, %.5lf, %.5lf, ",
+                    NEO_GPS.time,
+                    NEO_GPS.latitude,
+                    NEO_GPS.longitude);
+            sd_write(sd_data);
+
+            // termianl debugging
+            sprintf(NEO_GPS.result, "Time: %.lf Latitude: %.5lf Longitude: %.5lf\r\n",
+                    NEO_GPS.time, NEO_GPS.latitude, NEO_GPS.longitude);
+            CDC_Transmit_FS(NEO_GPS.result, strlen(NEO_GPS.result));
+
+            // Transmit data via radio
+            HAL_UART_Transmit_DMA(huart, NEO_GPS.result, strlen(NEO_GPS.result));
         }
-        /*size_t offset = start - (char*) data;
-        return data + offset;*/
+    }
+    else
+    {
+        sd_write("0.0, 0.0, 0.0, ");
     }
 }
+
 // convert long and lat to human readable
 void Gps_Data_Conversion()
 {

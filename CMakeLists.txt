@@ -38,11 +38,6 @@ enable_language(C ASM)
 file(GLOB_RECURSE SOURCES
     "${CMAKE_SOURCE_DIR}/Core/Src/*.c"
     "${CMAKE_SOURCE_DIR}/Core/Inc/*.h"
-    #"${CMAKE_SOURCE_DIR}/Drivers/STM32F4xx_HAL_Driver/Src/*.c"
-    #"${CMAKE_SOURCE_DIR}/FATFS/**/*.c"
-    #"${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FatFs/src/*.c"
-    #"${CMAKE_SOURCE_DIR}/Middlewares/ST/STM32_USB_Device_Library/**/*.c"
-    #"${CMAKE_SOURCE_DIR}/USB_DEVICE/**/*.c"
 )
 
 # Create an executable object type
@@ -71,6 +66,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     "${CMAKE_SOURCE_DIR}/Core/Inc"
     "${CMAKE_SOURCE_DIR}/Core/Src"
+    "${CMAKE_SOURCE_DIR}/Core/Inc/Drivers"
+    "${CMAKE_SOURCE_DIR}/Core/Src/Drivers"
 )
 
 # Add project symbols (macros)
