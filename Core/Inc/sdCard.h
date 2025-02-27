@@ -27,7 +27,7 @@ extern uint32_t total;
 void CDC_Transmit_FS(uint8_t *data, uint16_t length);
 int bufferSize(char *buff);
 void bufferClear(char *buff);
-void cdcTransmit(char *buff);
+void cdc_Transmit(char *buff);
 void sd_Start_Up();
 void file_naming();
 void sd_write();

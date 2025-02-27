@@ -75,6 +75,14 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
 )
+# Add compile options to treat implicit function declarations as errors
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Werror=implicit-function-declaration
+)
+
 
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
