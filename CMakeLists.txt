@@ -11,6 +11,7 @@ cmake_minimum_required(VERSION 3.22)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+message(STATUS "SOURCES: ${SOURCES}")
 
 
 # Define the build type
@@ -20,7 +21,7 @@ endif()
 
 # Set the project name
 set(CMAKE_PROJECT_NAME flightcomputer)
-
+message(STATUS "SOURCES: ${SOURCES}")
 # Include toolchain file
 include("cmake/gcc-arm-none-eabi.cmake")
 
